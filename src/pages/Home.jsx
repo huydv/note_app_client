@@ -1,5 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
+import { Outlet } from "react-router-dom";
+import FolderList from "../components/FolderList";
 import UserMenu from "../components/UserMenu";
 
 export default function Home() {
@@ -11,6 +13,24 @@ export default function Home() {
       <Box sx={{ display: "flex", justifyContent: "right", mb: "10px" }}>
         <UserMenu></UserMenu>
       </Box>
+
+      <Grid
+        container
+        sx={{ height: "50vh", boxShadow: "0 0 15px 0 rgb(193 193 193 / 60%)" }}
+      >
+        <Grid item xs={3} sx={{ height: "100%" }}>
+          <FolderList
+            folders={[
+              { id: "1", name: "Folder 1" },
+              { id: "2", name: "Folder 2" },
+            ]}
+          />
+        </Grid>
+
+        <Grid item xs={9} sx={{ height: "100%" }}>
+          <Outlet />
+        </Grid>
+      </Grid>
     </>
   );
 }

@@ -1,4 +1,6 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
+import Note from "../components/Note";
+import NoteList from "../components/NoteList";
 import AuthProvider from "../context/AuthProvider";
 import About from "../pages/About";
 import Home from "../pages/Home";
@@ -30,6 +32,18 @@ export default createBrowserRouter([
           {
             element: <Home />,
             path: "/",
+            children: [
+              {
+                element: <NoteList />,
+                path: "folders/:folderId",
+                children: [
+                  {
+                    element: <Note />,
+                    path: "note/:noteId",
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

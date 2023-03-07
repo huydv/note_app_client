@@ -10,6 +10,9 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
+
+import moment from "moment";
+
 import {
   Link,
   Outlet,
@@ -70,7 +73,7 @@ export default function NoteList() {
             </Box>
           }
         >
-          {folder.notes.map(({ id, content }) => {
+          {folder.notes.map(({ id, content, updatedAt }) => {
             return (
               <Link
                 key={id}
@@ -94,6 +97,9 @@ export default function NoteList() {
                         __html: `${content.substring(0, 30) || "Empty"}`,
                       }}
                     ></div>
+                    <Typography sx={{ fontSize: "10px" }}>
+                      {moment(updatedAt).format("MMM Do YYYY, hh:mm:ss")}
+                    </Typography>
                   </CardContent>
                 </Card>
               </Link>

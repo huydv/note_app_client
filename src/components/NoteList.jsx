@@ -1,12 +1,41 @@
-import { Card, CardContent, Grid, List, Typography } from "@mui/material";
+import { NoteAddOutlined } from "@mui/icons-material";
+import {
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+  List,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { Link, Outlet, useLoaderData, useParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLoaderData,
+  useParams,
+  useSubmit,
+} from "react-router-dom";
 
 export default function NoteList() {
-  const { noteId } = useParams();
+  const { noteId, folderId } = useParams();
   const [activeNoteId, setActiveNoteId] = useState(noteId);
   // const folder = { notes: [{ id: "1", content: "<p>This is a new note</p>" }] };
+  const submit = useSubmit();
+
+  const handleOnAddNote = (e) => {
+    submit(
+      {
+        content: "",
+        folderId,
+      },
+      {
+        method: "POST",
+        action: `/folders/${folderId}`,
+      }
+    );
+  };
 
   const { folder } = useLoaderData();
   return (
@@ -25,8 +54,19 @@ export default function NoteList() {
       >
         <List
           subheader={
-            <Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <Typography sx={{ fontWeight: "bold" }}>Notes</Typography>
+              <Tooltip title="add note" onClick={handleOnAddNote}>
+                <IconButton size="small">
+                  <NoteAddOutlined />
+                </IconButton>
+              </Tooltip>
             </Box>
           }
         >
